@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ===== السنة في الفوتر ===== */
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  /* ===== شريط التنقل: تغيير الشكل عند التمرير ===== */
   const nav = document.getElementById('nav');
   const onScrollNav = () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
@@ -11,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   onScrollNav();
   window.addEventListener('scroll', onScrollNav, { passive: true });
 
-  /* ===== قائمة الموبايل ===== */
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
   navToggle.addEventListener('click', () => {
@@ -21,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', () => navLinks.classList.remove('open'));
   });
 
-  /* ===== تمييز الرابط النشط أثناء التمرير (Scrollspy) ===== */
   const sections = document.querySelectorAll('section[id]');
   const navAnchors = document.querySelectorAll('.nav-link');
   const spyObserver = new IntersectionObserver((entries) => {
@@ -36,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { rootMargin: '-45% 0px -45% 0px' });
   sections.forEach(s => spyObserver.observe(s));
 
-  /* ===== كشف عناصر عند الظهور (Reveal on scroll) ===== */
   const revealEls = document.querySelectorAll('.reveal');
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -48,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.15 });
   revealEls.forEach(el => revealObserver.observe(el));
 
-  /* ===== عداد رقمي (200 فدان) ===== */
   const counters = document.querySelectorAll('.count-target');
   const animateCount = (el) => {
     const target = parseInt(el.dataset.target, 10);
@@ -72,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.6 });
   counters.forEach(c => counterObserver.observe(c));
 
-  /* ===== ثمار متساقطة زخرفية فوق فرع الهيرو ===== */
   const fruitField = document.getElementById('fruitField');
   const fruitPositions = [
     [72, 8], [64, 22], [78, 35], [58, 48], [70, 60],
@@ -87,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fruitField.appendChild(dot);
   });
 
-  /* ===== شبكة البستان: 200 خلية تمثل فدادين الموالح ===== */
   const orchardGrid = document.getElementById('orchardGrid');
   const varietyColors = ['#E8791A', '#F5A954', '#7FA37E', '#4C7A52', '#C96A1A'];
   const TOTAL_CELLS = 200;
@@ -110,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1 });
   orchardObserver.observe(orchardGrid);
 
-  /* ===== تقدّم خط المسيرة المهنية أثناء التمرير ===== */
   const timeline = document.getElementById('timeline');
   const timelineProgress = document.getElementById('timelineProgress');
   const updateTimelineProgress = () => {
@@ -125,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', updateTimelineProgress, { passive: true });
   window.addEventListener('resize', updateTimelineProgress);
 
-  /* ===== نموذج التواصل: إرسال فعلي عبر Formspree ===== */
   const form = document.getElementById('contactForm');
   const formNote = document.getElementById('formNote');
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/meajwlye';
@@ -135,12 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
     formNote.style.color = '';
     formNote.textContent = 'جارٍ الإرسال...';
 
-    if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes('ضع_الكود')) {
-      formNote.style.color = '#ff8a80';
-      formNote.textContent = 'خدمة الإرسال لسه مش مفعّلة. تواصل عبر الواتساب أو الإيميل الموضحين بالأعلى.';
-      return;
-    }
-
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
@@ -148,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: new FormData(form)
       });
       if (response.ok) {
+        formNote.style.color = '#9be79b';
         formNote.textContent = 'تم إرسال رسالتك بنجاح، هتوصلك الرد قريباً.';
         form.reset();
       } else {
