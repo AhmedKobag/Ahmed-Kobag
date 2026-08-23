@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formNote.style.color = '';
     formNote.textContent = 'جارٍ الإرسال...';
 
-    if (FORMSPREE_ENDPOINT.includes('https://formspree.io/f/meajwlye')) {
+    if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes('ضع_الكود')) {
       formNote.style.color = '#ff8a80';
       formNote.textContent = 'خدمة الإرسال لسه مش مفعّلة. تواصل عبر الواتساب أو الإيميل الموضحين بالأعلى.';
       return;
