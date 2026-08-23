@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== نموذج التواصل: إرسال فعلي عبر Formspree ===== */
   const form = document.getElementById('contactForm');
   const formNote = document.getElementById('formNote');
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/https://formspree.io/f/meajwlye'; // استبدل الجزء ده بعد إنشاء الحساب
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/meajwlye'; // استبدل الجزء ده بعد إنشاء الحساب
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
