@@ -122,45 +122,42 @@ document.addEventListener('DOMContentLoaded', () => {
     timelineProgress.style.height = `${Math.min(percent, 100)}%`;
   };
   updateTimelineProgress();
-  window.addEventListener('scroll', updateTimelineProgress, { passive: true });
-  window.addEventListener('resize', updateTimelineProgress);
+  window.addEventListener('scroll', updateTimelinePrdocument.addEventListener('DOMContentLoaded', () => {
 
-  /* ===== نموذج التواصل: إرسال فعلي عبر Formspree ===== */
-  const form = document.getElementById('contactForm');
-  const formNote = document.getElementById('formNote');
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/ضع_الكود_هنا'; // استبدل الجزء ده بعد إنشاء الحساب
+  /* ===== السنة في الفوتر ===== */
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    formNote.style.color = '';
-    formNote.textContent = 'جارٍ الإرسال...';
+  /* ===== شريط التنقل: تغيير الشكل عند التمرير ===== */
+  const nav = document.getElementById('nav');
+  const onScrollNav = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  };
+  onScrollNav();
+  window.addEventListener('scroll', onScrollNav, { passive: true });
 
-    if (FORMSPREE_ENDPOINT.includes('https://formspree.io/f/meajwlye')) {
-      formNote.style.color = '#ff8a80';
-      formNote.textContent = 'خدمة الإرسال لسه مش مفعّلة. تواصل عبر الواتساب أو الإيميل الموضحين بالأعلى.';
-      return;
-    }
-
-    try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      });
-      if (response.ok) {
-        formNote.textContent = 'تم إرسال رسالتك بنجاح، هتوصلك الرد قريباً.';
-        form.reset();
-      } else {
-        formNote.style.color = '#ff8a80';
-        formNote.textContent = 'حصل خطأ أثناء الإرسال، جرب تاني أو تواصل عبر الواتساب.';
-      }
-    } catch (err) {
-      formNote.style.color = '#ff8a80';
-      formNote.textContent = 'مفيش اتصال بالإنترنت حالياً، جرب تاني أو تواصل عبر الواتساب.';
-    }
+  /* ===== قائمة الموبايل ===== */
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
   });
 
-});
+  /* ===== تمييز الرابط النشط أثناء التمرير (Scrollspy) ===== */
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-link');
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navAnchors.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+        });
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
   sections.forEach(s => spyObserver.observe(s));
 
   /* ===== كشف عناصر عند الظهور (Reveal on scroll) ===== */
@@ -252,12 +249,42 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', updateTimelineProgress, { passive: true });
   window.addEventListener('resize', updateTimelineProgress);
 
-  /* ===== نموذج التواصل (تجريبي بدون خادم) ===== */
+  /* ===== نموذج التواصل: إرسال فعلي عبر Formspree ===== */
   const form = document.getElementById('contactForm');
   const formNote = document.getElementById('formNote');
-  form.addEventListener('submit', (e) => {
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/ضع_الكود_هنا'; // استبدل الجزء ده بعد إنشاء الحساب
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    formNote.textContent = 'شكراً لتواصلك، جارٍ تجهيز خدمة الإرسال الفعلية لهذا النموذج.';
+    formNote.style.color = '';
+    formNote.textContent = 'جارٍ الإرسال...';
+
+    if (FORMSPREE_ENDPOINT.includes('https://formspree.io/f/meajwlye')) {
+      formNote.style.color = '#ff8a80';
+      formNote.textContent = 'خدمة الإرسال لسه مش مفعّلة. تواصل عبر الواتساب أو الإيميل الموضحين بالأعلى.';
+      return;
+    }
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      if (response.ok) {
+        formNote.textContent = 'تم إرسال رسالتك بنجاح، هتوصلك الرد قريباً.';
+        form.reset();
+      } else {
+        formNote.style.color = '#ff8a80';
+        formNote.textContent = 'حصل خطأ أثناء الإرسال، جرب تاني أو تواصل عبر الواتساب.';
+      }
+    } catch (err) {
+      formNote.style.color = '#ff8a80';
+      formNote.textContent = 'مفيش اتصال بالإنترنت حالياً، جرب تاني أو تواصل عبر الواتساب.';
+    }
+  });
+
+});اصلك، جارٍ تجهيز خدمة الإرسال الفعلية لهذا النموذج.';
     form.reset();
   });
 
